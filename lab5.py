@@ -10,6 +10,9 @@
 import time
 import matplotlib.pyplot as plt
 
+recursive_time = []
+iterative_time = []
+
 # Рекурсивная функция
 def F_rec(n):
     if n == 0 or n == 1:
@@ -32,26 +35,32 @@ def F_iter(n):
 
 # Ввод числа n
 n = int(input("Введите число n: "))
-
+nn = []
+nnn = []
 # Подсчёт времени выполнения рекурсивно
-start_time = time.time()
-f_rec = F_rec(n)
-end_time = time.time()
-recursive_time = end_time - start_time
+for i in range(n+1):
+    start_time = time.time()
+    f_rec = F_rec(i)
+    end_time = time.time()
+    recursive_time.append(end_time - start_time)
+    nn.append(i)
+    print("F({}) = {} (рекурсивно в {:.6f} секунд)".format(nn[i], f_rec, recursive_time[i]))
 
 # Подсчёт времени выполнения итеративно
-start_time = time.time()
-f_iter = F_iter(n)
-end_time = time.time()
-iterative_time = end_time - start_time
-
+for i in range(n+1):
+    start_time = time.time()
+    f_iter = F_iter(i)
+    end_time = time.time()
+    iterative_time.append(end_time - start_time)
+    nnn.append(i)
+    print("F({}) = {} (итеративно в {:.6f} секунд)".format(nnn[i], f_iter, iterative_time[i]))
 # Вывод
-print("F({}) = {} (рекурсивно в {:.6f} секунд)".format(n, f_rec, recursive_time))
-print("F({}) = {} (итеративно в {:.6f} секунд)".format(n, f_iter, iterative_time))
+
+
 
 # График
-plt.plot([n], [recursive_time], 'ro', label='Рекурсивно')
-plt.plot([n], [iterative_time], 'bo', label='Итеративно')
+plt.plot(nn, recursive_time, 'ro', label='Рекурсивно')
+plt.plot(nnn, iterative_time, 'bo', label='Итеративно')
 plt.xlabel('n')
 plt.ylabel('Время (с)')
 plt.legend()
